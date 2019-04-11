@@ -22,11 +22,11 @@
 - other components provided by React Router rely on having access to that history object via reacts context (Context provides a way to pass data through the component tree without having to pass props down manually at every level.)
 - this means react router components must be children of a react router router component
 
-## Rendering a <Router>
+## Rendering a `<Router>`
 
 - only expects one child so we wrap the `<App>` component in a `<Router>` component
 
-# The <App>
+# The `<App>`
 
 - have split into Main and Header
 
