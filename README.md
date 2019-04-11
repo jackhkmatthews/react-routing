@@ -16,7 +16,7 @@
 
 ## History
 
-[A Little bit of History](https://www.notion.so/9c4d23048a734169a7d30ee0dc2c482d)
+[A Little bit of History](https://blog.pshrmn.com/entry/a-little-bit-of-history/)
 
 - router creates a history object. Used to keep track of current location and re-render app then that changes
 - other components provided by React Router rely on having access to that history object via reacts context (Context provides a way to pass data through the component tree without having to pass props down manually at every level.)
