@@ -1,6 +1,8 @@
 # React Router Tutorial (Paul Sherman)
 
-> [this](https://blog.pshrmn.com/entry/simple-react-router-v4-tutorial/) article
+> App built following [this](https://blog.pshrmn.com/entry/simple-react-router-v4-tutorial/) article.
+
+> README are rough notes made while following the article.
 
 > React Router is a third party library, React has no router
 
@@ -52,20 +54,20 @@
 
 - helpful from grouping routes with common prefixes. Parent components become pure routing components.
 
-    export function Roster() {
+    ```export function Roster() {
       return (
         <Switch>
           <Route exact path="/roster" component={FullRoster} />
           <Route exact path="/roster/:number" component={Player} />
         </Switch>
       );
-    }
+    }```
 
 - can access params from within the props object passes to routed components
 
-    export function Player(props) {
+    ```export function Player(props) {
       return <p>Player {props.match.params.number}</p>;
-    }
+    }```
 
 - can also nest routes inside routes. Nested components here are passed as props.children to their parent components.
 
@@ -76,4 +78,4 @@
 - when clicking `Link` URL will be updated and rendered content will change without a page reload
 - `Link` takes a `to` prop to describe where it should link to. A string or object can be provided:
 
-    <Link to={{ pathname: '/roster/7' }}>Player #7</Link>
+    `<Link to={{ pathname: '/roster/7' }}>Player #7</Link>`
