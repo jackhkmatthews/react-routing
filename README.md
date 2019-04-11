@@ -1,68 +1,79 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Router Tutorial (Paul Sherman)
 
-## Available Scripts
+> [this](https://blog.pshrmn.com/entry/simple-react-router-v4-tutorial/) article
 
-In the project directory, you can run:
+> React Router is a third party library, React has no router
 
-### `npm start`
+# Installation
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- `npm install —save react-router-dom`
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+# The router
 
-### `npm test`
+- two types, can either use `Browser` or `Hash` apparently hash is good for static sites on a server.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## History
 
-### `npm run build`
+[A Little bit of History](https://www.notion.so/9c4d23048a734169a7d30ee0dc2c482d)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- router creates a history object. Used to keep track of current location and re-render app then that changes
+- other components provided by React Router rely on having access to that history object via reacts context (Context provides a way to pass data through the component tree without having to pass props down manually at every level.)
+- this means react router components must be children of a react router router component
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Rendering a <Router>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- only expects one child so we wrap the `<App>` component in a `<Router>` component
 
-### `npm run eject`
+# The <App>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- have split into Main and Header
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Routes
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- When you only want to render content based on location's (the current location in the locations array in the history object) pathname (not the entire URL)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Path
 
-## Learn More
+- <Route> expects a path prop
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Matching paths
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- React Router uses the `path-to-regex` package to determine if a location matches a path prop - means path strings have some advanced features
+- when a route's path matches a match object is generated:
 
-### Code Splitting
+![Screenshot_2019-03-14_at_12-ad0cb8fb-a88f-475c-a043-fd2bd6e4e599 41 56](https://user-images.githubusercontent.com/20629455/55970282-2c8fdc80-5c77-11e9-9329-6a9503341383.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
+- this is passed on as `props` to component rendered by the Router component
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+![Screenshot_2019-03-14_at_13-801f33e1-de98-49b6-8f5f-be414f2acf16 03 45](https://user-images.githubusercontent.com/20629455/55970283-2c8fdc80-5c77-11e9-95c2-2312c05cf76a.png)
 
-### Making a Progressive Web App
+## Nested routes
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- helpful from grouping routes with common prefixes. Parent components become pure routing components.
 
-### Advanced Configuration
+    export function Roster() {
+      return (
+        <Switch>
+          <Route exact path="/roster" component={FullRoster} />
+          <Route exact path="/roster/:number" component={Player} />
+        </Switch>
+      );
+    }
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- can access params from within the props object passes to routed components
 
-### Deployment
+    export function Player(props) {
+      return <p>Player {props.match.params.number}</p>;
+    }
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+- can also nest routes inside routes. Nested components here are passed as props.children to their parent components.
 
-### `npm run build` fails to minify
+# Links
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- anchor elements would cause a full page refresh, not what we want when using a SPA
+- react router provides a `Link` component to prevent that from happening
+- when clicking `Link` URL will be updated and rendered content will change without a page reload
+- `Link` takes a `to` prop to describe where it should link to. A string or object can be provided:
+
+    <Link to={{ pathname: '/roster/7' }}>Player #7</Link>
